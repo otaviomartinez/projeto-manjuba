@@ -10,5 +10,9 @@ turno.o: turno.c turno.h personagem.h
 carta.o: src/carta.c src/carta.h
 	gcc -Wall -c src/carta.c
 
+batalha.o: batalha.c batalha.h personagem.h turno.h
+	gcc -Wall -c batalha.c
+
 main.o: src/main.c personagem.h turno.h src/carta.h
 	gcc -Wall -c src/main.c 
+
