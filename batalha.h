@@ -17,5 +17,6 @@ typedef struct Batalha {
 } Batalha;
 
 Personagem* encontrar_alvo(Batalha* b, int atacante_jogavel);
+EstadoBatalha verificar_fim_batalha(Batalha* b);
 
 #endif

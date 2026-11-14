@@ -1,5 +1,5 @@
-jogo.exe: personagem.o turno.o main.o carta.o
-	gcc -Wall  personagem.o turno.o main.o carta.o -o jogo.exe
+jogo.exe: personagem.o turno.o main.o carta.o batalha.o
+	gcc -Wall  personagem.o turno.o main.o carta.o batalha.o -o jogo.exe
 
 personagem.o: personagem.c personagem.h
 	gcc -Wall -c personagem.c
@@ -16,3 +16,5 @@ batalha.o: batalha.c batalha.h personagem.h turno.h
 main.o: src/main.c personagem.h turno.h src/carta.h
 	gcc -Wall -c src/main.c 
 
+test_batalha.exe: tests/test_batalha.c batalha.o personagem.o turno.o
+	gcc -Wall tests/test_batalha.c batalha.o personagem.o turno.o -o test_batalha.exe

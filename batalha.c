@@ -18,3 +18,32 @@ Personagem* encontrar_alvo(Batalha* b, int atacante_jogavel){
     }
     return NULL; // nenhum jogador vivo encontrado  
 }
+
+
+EstadoBatalha verificar_fim_batalha(Batalha* b){
+    int jogadores_vivos = 0;
+    int inimigos_vivos = 0; 
+
+    for (int i = 0; i < b->quantidade_jogadores; i++) {
+        if (b->jogadores[i].vivo) {
+            jogadores_vivos++;
+        }
+    }
+
+    for (int i = 0; i < b->quantidade_inimigos; i++) {
+        if (b->inimigos[i].vivo) {
+            inimigos_vivos++;
+        }
+    }
+
+    if (jogadores_vivos == 0) {
+        b->estado =  DERROTA; // Todos os jogadores estão mortos
+    }   
+    else if (inimigos_vivos == 0) {
+        b->estado = VITORIA; // Todos os inimigos estão mortos
+    } else {
+        b->estado = EM_ANDAMENTO; // A batalha ainda está em andamento
+    }  
+    return b->estado;   
+
+}
