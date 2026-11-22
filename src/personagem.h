@@ -13,7 +13,7 @@ typedef struct Personagem {
 } Personagem;
 
 //funções
-Personagem criar_personagem(const char* nome, int vida, int iniciativa, int jogavel, int vida_max, int numero_baralho);
+Personagem criar_personagem(const char* nome, int vida, int vida_max, int iniciativa, int jogavel, int numero_baralho);
 void tomar_dano(Personagem* personagem, int dano, int vivo);
 void curar(Personagem* personagem, int cura, int vivo, int vida_max);
 

@@ -1,8 +1,9 @@
+#include "carta.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-Carta criar_carta(char nome[], char descricao[], char tipo, int area, int efeito){
+Carta criar_carta(const char* nome, const char* descricao, char tipo, int area, int efeito){
     Carta carta_nova;
     strcpy(carta_nova.nome, nome);
     strcpy(carta_nova.descricao, descricao);
@@ -17,13 +18,13 @@ void print_carta(Carta carta){
     printf(" -- Carta -- \n");
 
     printf("Nome: ");
-    for(int i = 0; i < strlen(carta.nome); i++){
+    for(size_t i = 0; i < strlen(carta.nome); i++){
         printf("%c", carta.nome[i]);
     }
     printf("\n");
 
     printf("Descricao: ");  
-    for(int i = 0; i < strlen(carta.descricao); i++){
+    for(size_t i = 0; i < strlen(carta.descricao); i++){
         printf("%c", carta.descricao[i]);
     }
     printf("\n");
@@ -50,4 +51,3 @@ void print_carta(Carta carta){
     printf("\n\n");
     return;
 }
-
