@@ -9,7 +9,7 @@ typedef struct{
     int efeito;
 } Carta;
 
-Carta criar_carta(char nome[15], char descricao[200], char tipo, int area, int efeito);
+Carta criar_carta(const char* nome, const char* descricao, char tipo, int area, int efeito);
 
 void print_carta(Carta carta);
 
