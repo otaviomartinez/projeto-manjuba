@@ -5,6 +5,11 @@
 #include "carta.h"
 #define NUM_CARTAS 5
 #define ROTACIONAR 4
+#define NUM_COMBATES 3
+
+/* Leva 1, leva 2 e chefe. */
+static const int inimigos_por_combate[NUM_COMBATES] = {3, 2, 1};
+static const int vida_por_combate[NUM_COMBATES] = {30, 45, 90};
 static Carta cartas[NUM_CARTAS];
 
 static void mostrar_estado(const Batalha* b) {
@@ -27,10 +32,10 @@ static int escolher(Baralho* b, int automatico) {
             if (!automatico) printf("%d - %s (%d)\n", i+1, cartas[id].nome, cartas[id].efeito);
         }
         if (automatico) return ROTACIONAR;
-        printf("Carta (1..%d; r para rotacionar; 0 para sair): ", NUM_CARTAS    );
+        printf("Carta (1..%d; r para rotacionar; 0 para sair): ", CARTAS_MAO);
         fflush(stdout);
         if (!fgets(linha, sizeof linha, stdin)) return 0;
-         if (linha[0] == 'r' || linha[0] == 'R') return ROTACIONAR;
+        if (linha[0] == 'r' || linha[0] == 'R') return ROTACIONAR;
         int opcao;
         char extra;
         if (sscanf(linha, "%d %c", &opcao, &extra) == 1 && opcao >= 0 &&
@@ -85,13 +90,14 @@ int main(int argc, char** argv) {
         for (int id = 0; id < NUM_CARTAS; id++) inserirCarta(baralhos[i], id);
     }
     int sair = 0;
-    for (int combate = 1; combate <= 2 && !sair; combate++) {
-        b.quantidade_inimigos = combate == 1 ? 3 : 1;
+    for (int combate = 1; combate <= NUM_COMBATES && !sair; combate++) {
+        int chefe = combate == NUM_COMBATES;
+        b.quantidade_inimigos = inimigos_por_combate[combate - 1];
         for (int i = 0; i < b.quantidade_inimigos; i++) {
             char nome[30];
             snprintf(nome, sizeof nome, "Inimigo %d", i+1);
-            int vida = combate == 1 ? 30 : 90;
-            b.inimigos[i] = criar_personagem(combate == 1 ? nome : "Chefe", vida, vida, 9, 0, 0);
+            int vida = vida_por_combate[combate - 1];
+            b.inimigos[i] = criar_personagem(chefe ? "Chefe" : nome, vida, vida, 9, 0, 0);
         }
         /* Referencias para os personagens dentro de b, que permanece no mesmo lugar. */
         Personagem* participantes[6];
@@ -112,7 +118,7 @@ int main(int argc, char** argv) {
                 Baralho* deck = baralhos[ator->numero_baralho];
                 int opcao = escolher(deck, automatico);
                 if (!opcao) { sair = 1; break; }
-                 if (opcao == ROTACIONAR) {
+                if (opcao == ROTACIONAR) {
                     rotacionarCarta(deck);
                     printf("%s rotaciona o baralho.\n", ator->nome);
                 } else {
