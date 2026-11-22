@@ -26,19 +26,19 @@ void usar_carta(Carta carta);
 //Função que usa a carta, depende da implementação do baralho e personagens
 
 void print_carta(Carta carta){
-    printf(" -- Carta -- \n\n");
+    printf(" -- Carta -- \n");
 
     printf("Nome: ");
     for(int i = 0; i < strlen(carta.nome); i++){
         printf("%c", carta.nome[i]);
     }
-    printf("\n\n");
+    printf("\n");
 
     printf("Descricao: ");  
     for(int i = 0; i < strlen(carta.descricao); i++){
         printf("%c", carta.descricao[i]);
     }
-    printf("\n\n");
+    printf("\n");
     
     printf("Tipo de ataque: ");
     if(carta.area == 1){ 
@@ -48,7 +48,7 @@ void print_carta(Carta carta){
         printf("Individual"); 
     }
 
-    printf("\n\n");
+    printf("\n");
 
     printf("Tipo: ");
     if (carta.tipo == 'A'){
@@ -56,9 +56,10 @@ void print_carta(Carta carta){
     } else {
         printf("Cura");
     }
-    printf("\n\n");
+    printf("\n");
 
     printf("Efeito: %d\n\n", carta.efeito);
+    printf("\n\n");
     return;
 }
 

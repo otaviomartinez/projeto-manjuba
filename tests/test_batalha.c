@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../batalha.h"
+#include "src\batalha.h"
 
 /* Imprime o nome do alvo, ou avisa se nao ha nenhum. */
 void mostrar_alvo(Personagem* alvo) {
