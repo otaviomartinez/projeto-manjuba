@@ -3,8 +3,9 @@
 #include "batalha.h"
 #include "baralho.h"
 #include "carta.h"
-
-static Carta cartas[3];
+#define NUM_CARTAS 5
+#define ROTACIONAR 4
+static Carta cartas[NUM_CARTAS];
 
 static void mostrar_estado(const Batalha* b) {
     for (int equipe = 0; equipe < 2; equipe++) {
@@ -25,10 +26,11 @@ static int escolher(Baralho* b, int automatico) {
             if (automatico && cartas[id].tipo == 'A') return i + 1;
             if (!automatico) printf("%d - %s (%d)\n", i+1, cartas[id].nome, cartas[id].efeito);
         }
-        if (automatico) return 0;
-        printf("Carta (1..3; 0 para sair): ");
+        if (automatico) return ROTACIONAR;
+        printf("Carta (1..%d; r para rotacionar; 0 para sair): ", NUM_CARTAS    );
         fflush(stdout);
         if (!fgets(linha, sizeof linha, stdin)) return 0;
+         if (linha[0] == 'r' || linha[0] == 'R') return ROTACIONAR;
         int opcao;
         char extra;
         if (sscanf(linha, "%d %c", &opcao, &extra) == 1 && opcao >= 0 &&
@@ -66,6 +68,8 @@ int main(int argc, char** argv) {
     cartas[0] = criar_carta("Espadada", "Ataque no primeiro inimigo vivo", 'A', 0, 12);
     cartas[1] = criar_carta("Curativo", "Cura o proprio personagem", 'C', 0, 10);
     cartas[2] = criar_carta("Terremoto", "Dano em todos os inimigos vivos", 'A', 1, 7);
+    cartas[3] = criar_carta("Investida", "Ataque forte no primeiro inimigo", 'A', 0, 15);
+    cartas[4] = criar_carta("Bandagem", "Cura leve no proprio personagem", 'C', 0, 6);
     Carta soco = criar_carta("Soco", "Ataque inimigo", 'A', 0, 6);
     b.quantidade_jogadores = 3;
     b.jogadores[0] = criar_personagem("Ana", 60, 60, 12, 1, 0);
@@ -78,7 +82,7 @@ int main(int argc, char** argv) {
             fprintf(stderr, "Falha ao criar baralho.\n");
             return 1;
         }
-        for (int id = 0; id < 3; id++) inserirCarta(baralhos[i], id);
+        for (int id = 0; id < NUM_CARTAS; id++) inserirCarta(baralhos[i], id);
     }
     int sair = 0;
     for (int combate = 1; combate <= 2 && !sair; combate++) {
@@ -108,8 +112,13 @@ int main(int argc, char** argv) {
                 Baralho* deck = baralhos[ator->numero_baralho];
                 int opcao = escolher(deck, automatico);
                 if (!opcao) { sair = 1; break; }
-                int id = usarCarta(deck, opcao);
-                aplicar(&b, ator, cartas[id]);
+                 if (opcao == ROTACIONAR) {
+                    rotacionarCarta(deck);
+                    printf("%s rotaciona o baralho.\n", ator->nome);
+                } else {
+                    int id = usarCarta(deck, opcao);
+                    aplicar(&b, ator, cartas[id]);
+                }
             } else aplicar(&b, ator, soco);
             avancar_turno(&b.turno);
         }
