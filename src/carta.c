@@ -4,17 +4,19 @@
 
 typedef struct{
     char nome[15];
-    char descricao[200];
+    char descricao[100];
     char tipo; // A = Ataque, C = cura
+    int area; // 1 - efeito em area | 0 - efeito em um inimigo só
     int efeito; // quantidade de cura ou de dano
     int namao; // 0 = não ta na mao, 1 = ta na mão
 } Carta;
 
-Carta criar_carta(char nome[], char descricao[], char tipo, int efeito){
+Carta criar_carta(char nome[], char descricao[], char tipo, int area, int efeito){
     Carta carta_nova;
     strcpy(carta_nova.nome, nome);
     strcpy(carta_nova.descricao, descricao);
     carta_nova.tipo = tipo;
+    carta_nova.area = area;
     carta_nova.efeito = efeito;
     carta_nova.namao = 0;
     return carta_nova;
@@ -32,10 +34,20 @@ void print_carta(Carta carta){
     }
     printf("\n\n");
 
-    printf("Descricao: ");
+    printf("Descricao: ");  
     for(int i = 0; i < strlen(carta.descricao); i++){
         printf("%c", carta.descricao[i]);
     }
+    printf("\n\n");
+    
+    printf("Tipo de ataque: ");
+    if(carta.area == 1){ 
+        printf("Em area"); 
+    }
+    else{ 
+        printf("Individual"); 
+    }
+
     printf("\n\n");
 
     printf("Tipo: ");
