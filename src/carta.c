@@ -2,14 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct{
-    char nome[15];
-    char descricao[100];
-    char tipo; // A = Ataque, C = cura
-    int area; // 1 - efeito em area | 0 - efeito em um inimigo só
-    int efeito; // quantidade de cura ou de dano
-} Carta;
-
 Carta criar_carta(char nome[], char descricao[], char tipo, int area, int efeito){
     Carta carta_nova;
     strcpy(carta_nova.nome, nome);
