@@ -7,7 +7,7 @@
 typedef struct {
     int cartas[MAX_CARTAS];
     int inicio;
-   int fim;
+    int fim;
     int qtd;
 } Baralho;
 

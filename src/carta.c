@@ -8,7 +8,6 @@ typedef struct{
     char tipo; // A = Ataque, C = cura
     int area; // 1 - efeito em area | 0 - efeito em um inimigo só
     int efeito; // quantidade de cura ou de dano
-    int namao; // 0 = não ta na mao, 1 = ta na mão
 } Carta;
 
 Carta criar_carta(char nome[], char descricao[], char tipo, int area, int efeito){
@@ -18,12 +17,9 @@ Carta criar_carta(char nome[], char descricao[], char tipo, int area, int efeito
     carta_nova.tipo = tipo;
     carta_nova.area = area;
     carta_nova.efeito = efeito;
-    carta_nova.namao = 0;
     return carta_nova;
 }
 
-void usar_carta(Carta carta); 
-//Função que usa a carta, depende da implementação do baralho e personagens
 
 void print_carta(Carta carta){
     printf(" -- Carta -- \n");
